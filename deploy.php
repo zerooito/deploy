@@ -4,10 +4,6 @@ namespace Deployer;
 
 require 'recipe/laravel.php';
 
-// Configuration
-set('ssh_type', 'native');
-set('ssh_multiplexing', true);
-
 set('repository', 'git@github.com:ciawn/api.git');
 
 // Laravel shared dirs
@@ -28,7 +24,7 @@ set('writable_dirs', ['storage/*', 'vendor', 'bootstrap']);
 // Servers
 server('production', '31.220.52.41')
     ->user('root')
-    ->password('')
+    ->password()
     ->set('deploy_path', '/var/www/api.ciawn.com.br');
 
 // Tasks
