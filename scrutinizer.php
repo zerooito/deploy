@@ -1,10 +1,11 @@
 <?php
 
+require 'constants.php';
+
 class Deploy
 {
 	
-	const URL = 'https://scrutinizer-ci.com/api/repositories/g/ciawn/dashboard/inspections?access_token=e0c3870a889587f6271f81cc9d51e0ef515664ad463ecf90f3f4d65bf2af269d';
-
+	const URL = SCRUTINIZER_ENDPOINT . '?access_token=' . TOKEN;
 
 	public function getLastBuild()
 	{
@@ -25,7 +26,7 @@ class Deploy
 	{
 		if ($this->getLastBuild() != "passed")
 			throw new Exception("Last Build Failed");			
-
+		
 		print self::URL;
 	}
 

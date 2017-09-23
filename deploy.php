@@ -2,40 +2,26 @@
 
 namespace Deployer;
 
+require 'constants.php';
+
 require 'recipe/laravel.php';
 
-set('repository', 'git@github.com:ciawn/api.git');
+set('repository', SSH_GIT);
 
 // Laravel shared dirs
-set('shared_dirs', [
-    'storage/app',
-    'storage/framework/cache',
-    'storage/framework/sessions',
-    'storage/framework/views',
-    'storage/logs',
-]);
+set('shared_dirs', SHARED_DIRS);
 
 // Laravel 5 shared file
-set('shared_files', ['.env']);
+set('shared_files', SHARED_FILES);
 
 // Laravel writable dirs
-set('writable_dirs', ['storage/*', 'vendor', 'bootstrap']);
+set('writable_dirs', WRITABLE_DIRS);
 
 // Servers
-server('production', '31.220.52.41')
-    ->user('root')
-    ->password()
-    ->set('deploy_path', '/var/www/api.ciawn.com.br');
-
-// Tasks
-desc('Restart PHP-FPM service');
-task('php-fpm:restart', function () {
-    // The user must have rights for restart service
-    // /etc/sudoers: username ALL=NOPASSWD:/bin/systemctl restart php-fpm.service
-    run('sudo systemctl restart php-fpm.service');
-});
-
-after('deploy:symlink', 'php-fpm:restart');
+server('production', IP_SERVER)
+    ->user(USER)
+    ->password(PASSWORD)
+    ->set('deploy_path', PATH);
 
 desc('Deploy your project');
 task('deploy', [
@@ -44,7 +30,6 @@ task('deploy', [
     'deploy:release',
     'deploy:update_code',
     'deploy:shared',
-    'deploy:writable',
     'deploy:vendors',
     'deploy:clear_paths',
     'deploy:symlink',
@@ -53,8 +38,4 @@ task('deploy', [
     'success',
 ]);
 
-// [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
-
-// Migrate database before symlink new release.
-before('deploy:symlink', 'artisan:migrate');
