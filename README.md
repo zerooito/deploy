@@ -9,6 +9,8 @@ Deploy application Laravel/Lumen with git using deployer and scrutinizer.
   
 # Using
 
+Clone this repository.
+
 After install dependencies, rename file "constants.example.php" to "constants.php" and replace values as example.
 
 ![captura de tela de 2017-09-23 23-29-50](https://user-images.githubusercontent.com/7466894/30778902-2e229d76-a0b7-11e7-943e-571f5cefbf31.png)
