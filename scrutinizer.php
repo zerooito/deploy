@@ -27,7 +27,8 @@ class Deploy
 		if ($this->getLastBuild() != "passed")
 			throw new Exception("Last Build Failed");			
 		
-		print self::URL;
+		shell_exec('cd ' . PATH_DEPLOY_SOURCE . ' && dep deploy:unlock -vvv');
+		shell_exec('cd ' . PATH_DEPLOY_SOURCE . ' && dep deploy -vvv');
 	}
 
 }
